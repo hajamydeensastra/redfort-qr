@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Red Fort – QR Landing Page (English)</title>
+  <style>
+    :root{
+      --bg: #0f1226;
+      --card: #15193a;
+      --accent: #7c5cff;
+      --accent-2: #25d0a4;
+      --text: #f2f3f7;
+      --muted: #aeb3c2;
+      --danger: #ff5c7c;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text); background:
+        radial-gradient(1200px 600px at 10% -20%, rgba(124,92,255,.35), transparent 60%),
+        radial-gradient(800px 400px at 120% 10%, rgba(37,208,164,.25), transparent 60%),
+        var(--bg);
+      min-height:100dvh; display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+    .container{ max-width:1100px; width:100%; display:grid; gap:20px; grid-template-columns: 1.2fr 1fr; }
+    @media (max-width: 900px){ .container{ grid-template-columns: 1fr; } }
+
+    .card{ background: linear-gradient(180deg, #1b2048, #121533); border:1px solid rgba(255,255,255,.06); border-radius:24px; box-shadow: 0 20px 60px rgba(0,0,0,.45); overflow:hidden }
+    .pad{ padding:20px }
+
+    .hero{ display:grid; grid-template-rows: auto 1fr auto; height:100%; }
+    .hero img{ width:100%; height:320px; object-fit:cover; border-bottom:1px solid rgba(255,255,255,.06) }
+    .credits{ color:var(--muted); font-size:12px; margin-top:6px }
+
+    .title{ font-size:28px; font-weight:800; letter-spacing:.2px; margin:0 0 8px }
+    .subtitle{ color:var(--muted); margin:0 0 12px; font-size:14px }
+
+    /* Text display + highlight */
+    .textbox{ line-height:1.75; font-size:16px; color:#e8e9f0 }
+    .textbox .word{ padding:2px 3px; border-radius:6px; transition:background .15s ease, color .15s ease }
+    .textbox .word.active{ background: rgba(124,92,255,.24); color: #fff }
+
+    /* Controls */
+    .controls{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:16px }
+    @media (max-width: 520px){ .controls{ grid-template-columns: 1fr } }
+    .control{ background: rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:12px }
+    label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px }
+    select, input[type="range"], textarea{ width:100% }
+    select, input[type="range"]{ background:#0e1130; color:#e9ecf7; border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:10px }
+
+    textarea{ background:#0e1130; color:#e9ecf7; border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:12px; min-height:120px; resize:vertical }
+
+    .btnrow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px }
+    .btn{ cursor:pointer; user-select:none; border:1px solid rgba(255,255,255,.12); background:#0f1334; color:#fff; padding:12px 14px; border-radius:14px; font-weight:600; letter-spacing:.2px; transition:transform .06s ease, background .2s }
+    .btn:hover{ background:#13183f }
+    .btn:active{ transform:translateY(1px) }
+    .btn.primary{ background: linear-gradient(90deg, var(--accent), #9a7cff); border:none }
+    .btn.success{ background: linear-gradient(90deg, var(--accent-2), #38e1ba); border:none }
+    .btn.stop{ background: linear-gradient(90deg, #ff6b65, var(--danger)); border:none }
+
+    /* Avatar (SVG) */
+    .avatarWrap{ display:flex; align-items:center; justify-content:center; padding:16px }
+    .avatar{ width:260px; height:260px; filter: drop-shadow(0 20px 30px rgba(0,0,0,.45)); }
+    .face{ fill:#ffcba1 }
+    .hair{ fill:#20243d }
+    .eyes{ fill:#11131f }
+    .mouth{ fill:#e8436b; transform-origin: 130px 160px }
+    .teeth{ fill:#fff }
+
+    /* Idle blink */
+    .eyeLid, .eyeLid2{ transform-origin: center; }
+    .blink .eyeLid{ animation: blink 6s infinite }
+    .blink .eyeLid2{ animation: blink 6.2s infinite }
+    @keyframes blink{ 0%, 97%, 100% { transform: scaleY(1) } 98% { transform: scaleY(0.05) } }
+
+    /* Talking mouth animation (fallback) */
+    .talking .mouth{ animation: talk .12s infinite alternate }
+    @keyframes talk{ from{ transform: scaleY(0.6) } to{ transform: scaleY(1.2) } }
+
+    .footer{ text-align:center; color:var(--muted); font-size:12px; margin-top:10px }
+    .chip{ display:inline-block; padding:6px 10px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:999px; font-size:12px }
+    .hint{ font-size:12px; color:var(--muted); margin-top:6px }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <!-- Left: Image + Avatar -->
+    <section class="card hero">
+      <img src="redfort.jpg" alt="Red Fort" onerror="this.src='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 800 450\'><defs><linearGradient id=\'g\' x1=\'0\' x2=\'1\'><stop stop-color=\'%23c04848\'/><stop offset=\'1\' stop-color=\'%238f3333\'/></linearGradient></defs><rect width=\'100%\' height=\'100%\' fill=\'url(%23g)\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'white\' font-family=\'Arial, sans-serif\' font-size=\'42\'>Red Fort</text></svg>');" />
+
+      <div class="avatarWrap">
+        <!-- Simple SVG talking avatar -->
+        <svg class="avatar blink" viewBox="0 0 260 260" aria-hidden="true">
+          <defs>
+            <radialGradient id="glow" cx="50%" cy="30%" r="80%">
+              <stop offset="0%" stop-color="#fff" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <circle cx="130" cy="130" r="110" fill="#1a1f49"/>
+          <circle cx="130" cy="120" r="90" class="face"/>
+          <ellipse cx="130" cy="70" rx="90" ry="40" class="hair"/>
+          <ellipse cx="130" cy="35" rx="60" ry="22" class="hair"/>
+
+          <!-- Eyes -->
+          <g class="eyes">
+            <g class="eyeLid">
+              <circle cx="95" cy="115" r="10"/>
+            </g>
+            <g class="eyeLid2">
+              <circle cx="165" cy="115" r="10"/>
+            </g>
+          </g>
+
+          <!-- Mouth -->
+          <g>
+            <ellipse cx="130" cy="168" rx="26" ry="9" class="teeth"/>
+            <ellipse id="mouth" cx="130" cy="168" rx="26" ry="16" class="mouth"/>
+          </g>
+
+          <circle cx="70" cy="200" r="10" fill="url(#glow)"/>
+          <circle cx="190" cy="210" r="12" fill="url(#glow)"/>
+        </svg>
+      </div>
+
+      <div class="footer pad">
+        <span class="chip">Scan QR → Page opens → Listen & Watch</span>
+        <div class="hint">Tip: replace <code>redfort.jpg</code> with your own image file.</div>
+      </div>
+    </section>
+
+    <!-- Right: Text + TTS Controls -->
+    <section class="card pad">
+      <h1 class="title">Red Fort</h1>
+      <p class="subtitle">A historic red sandstone fort in Delhi, India</p>
+
+      <div id="textDisplay" class="textbox" aria-live="polite"></div>
+
+      <details style="margin-top:10px">
+        <summary style="cursor:pointer; color:var(--accent)">✏️ Edit narration text (optional)</summary>
+        <div class="control" style="margin-top:10px">
+          <label for="textInput">You can edit the text below. Click “Apply Text” to update the narration above.</label>
+          <textarea id="textInput"></textarea>
+          <div class="btnrow">
+            <button class="btn success" id="applyTextBtn">Apply Text</button>
+          </div>
+        </div>
+      </details>
+
+      <div class="controls">
+        <div class="control">
+          <label for="voiceSelect">Voice</label>
+          <select id="voiceSelect"></select>
+          <div class="hint">Prefer English voices (en-IN, en-GB, or en-US). If empty, click Play once and reopen the list.</div>
+        </div>
+        <div class="control">
+          <label for="rate">Rate (speed)</label>
+          <input id="rate" type="range" min="0.6" max="1.4" step="0.05" value="1" />
+          <label for="pitch" style="margin-top:10px">Pitch</label>
+          <input id="pitch" type="range" min="0.6" max="1.6" step="0.05" value="1" />
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button class="btn primary" id="playBtn">▶️ Play</button>
+        <button class="btn" id="pauseBtn">⏸️ Pause</button>
+        <button class="btn" id="resumeBtn">⏯️ Resume</button>
+        <button class="btn stop" id="stopBtn">⏹️ Stop</button>
+      </div>
+
+      <div class="hint">Some mobile browsers require a user tap before audio starts. Press Play to begin.</div>
+    </section>
+  </main>
+
+  <script>
+    // -----------------------
+    // 1) Default narration text (English)
+    // -----------------------
+    const DEFAULT_TEXT = `The Red Fort, also known as Lal Qila, is a historic fort in Old Delhi, India. Constructed by the Mughal emperor Shah Jahan in the seventeenth century, it is built from striking red sandstone and became the seat of Mughal power. Today, the Red Fort is a UNESCO World Heritage Site and a symbol of India's independence. On every Independence Day, August 15, the Prime Minister addresses the nation from its ramparts and the national flag is raised. Inside the complex are palaces, audience halls, museums, and beautiful gardens that reflect a blend of Persian, Timurid, and Indian architectural traditions.`;
+
+    const textDisplay = document.getElementById('textDisplay');
+    const textInput   = document.getElementById('textInput');
+    const applyTextBtn= document.getElementById('applyTextBtn');
+
+    // Render text as word spans for highlighting during speech
+    function renderText(text){
+      const words = text.replace(/\n/g, ' ').split(/(\s+)/); // keep spaces
+      textDisplay.innerHTML = words.map(w => /\s+/.test(w) ? w : `<span class="word">${escapeHtml(w)}</span>`).join('');
+    }
+    function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c])); }
+
+    // Initialize content
+    textInput.value = DEFAULT_TEXT;
+    renderText(DEFAULT_TEXT);
+
+    applyTextBtn.addEventListener('click', ()=>{
+      renderText(textInput.value.trim() || DEFAULT_TEXT);
+    });
+
+    // -----------------------
+    // 2) Speech Synthesis setup
+    // -----------------------
+    const synth = window.speechSynthesis;
+    const voiceSelect = document.getElementById('voiceSelect');
+    const rate  = document.getElementById('rate');
+    const pitch = document.getElementById('pitch');
+    const playBtn   = document.getElementById('playBtn');
+    const pauseBtn  = document.getElementById('pauseBtn');
+    const resumeBtn = document.getElementById('resumeBtn');
+    const stopBtn   = document.getElementById('stopBtn');
+
+    let voices = [];
+    function populateVoices(){
+      voices = synth.getVoices().sort((a,b)=> a.lang.localeCompare(b.lang));
+      const options = voices.map((v,i)=>{
+        const label = `${v.name} — ${v.lang}${v.localService ? ' (local)' : ''}`;
+        return `<option value="${i}">${label}</option>`;
+      });
+      voiceSelect.innerHTML = options.join('');
+
+      // Prefer English voices (en-IN > en-GB > en-US) else fallback to the first
+      let idx = voices.findIndex(v=>/en-?IN/i.test(v.lang));
+      if(idx < 0) idx = voices.findIndex(v=>/en-?GB/i.test(v.lang));
+      if(idx < 0) idx = voices.findIndex(v=>/en-?US/i.test(v.lang));
+      if(idx < 0) idx = 0;
+      if(idx >= 0) voiceSelect.value = String(idx);
+    }
+
+    populateVoices();
+    if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined){
+      speechSynthesis.onvoiceschanged = populateVoices;
+    }
+
+    // -----------------------
+    // 3) Talking avatar helpers
+    // -----------------------
+    const avatar = document.querySelector('.avatar');
+    function setTalking(is){
+      if(is) avatar.classList.add('talking'); else avatar.classList.remove('talking');
+    }
+
+    // Highlight logic using boundary events
+    let wordSpans = [];
+    function collectWordSpans(){ wordSpans = Array.from(textDisplay.querySelectorAll('.word')); }
+    collectWordSpans();
+    const observer = new MutationObserver(()=> collectWordSpans());
+    observer.observe(textDisplay, {childList:true, subtree:true});
+
+    function clearHighlights(){ wordSpans.forEach(s=>s.classList.remove('active')); }
+
+    function highlightByCharIndex(charIndex){
+      // Build a simple map of cumulative char length to word index
+      let sum = 0; let targetIndex = 0;
+      for(let i=0;i<wordSpans.length;i++){
+        const w = wordSpans[i].textContent || '';
+        sum += w.length + 1; // +1 approx for space
+        if(charIndex < sum){ targetIndex = i; break; }
+      }
+      clearHighlights();
+      if(wordSpans[targetIndex]) wordSpans[targetIndex].classList.add('active');
+    }
+
+    // -----------------------
+    // 4) Speak / Pause / Resume / Stop
+    // -----------------------
+    let currentUtterance = null;
+
+    function speak(){
+      const text = textDisplay.textContent.trim();
+      if(!text){ return; }
+
+      if(synth.speaking){ synth.cancel(); }
+
+      const u = new SpeechSynthesisUtterance(text);
+      currentUtterance = u;
+
+      const v = voices[Number(voiceSelect.value)] || null;
+      if(v){ u.voice = v; u.lang = v.lang; }
+      else { u.lang = 'en-IN'; }
+      u.rate = Number(rate.value);
+      u.pitch = Number(pitch.value);
+
+      u.onstart = ()=>{ setTalking(true); clearHighlights(); };
+      u.onend   = ()=>{ setTalking(false); clearHighlights(); };
+      u.onerror = ()=>{ setTalking(false); };
+      u.onboundary = (e)=>{
+        if(e.name === 'word' || e.charIndex !== undefined){
+          highlightByCharIndex(e.charIndex || 0);
+          // micro jaw motion accent
+          const mouth = document.getElementById('mouth');
+          if(mouth){
+            mouth.style.transform = 'scaleY(1.35)';
+            setTimeout(()=> mouth.style.transform = '', 80);
+          }
+        }
+      };
+
+      synth.speak(u); // speaks the entire text from start to finish
+    }
+
+    playBtn.addEventListener('click', speak);
+    pauseBtn.addEventListener('click', ()=> synth.pause());
+    resumeBtn.addEventListener('click', ()=> synth.resume());
+    stopBtn.addEventListener('click', ()=>{ synth.cancel(); setTalking(false); clearHighlights(); });
+  </script>
+</body>
+</html>
